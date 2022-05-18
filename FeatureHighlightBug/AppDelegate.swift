@@ -10,18 +10,29 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+	var window: UIWindow?
+	var mainVC: UIViewController?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		self.window = UIWindow(frame: UIScreen.main.bounds)
+		window?.rootViewController = MainViewController()
+		window?.makeKeyAndVisible()
+		
+		mainVC = window?.rootViewController
+		
 		return true
 	}
-
-	// MARK: UISceneSession Lifecycle
-
-	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-		return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+	
+	func applicationWillEnterForeground(_ application: UIApplication) {
+		DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [unowned self] in
+			window?.rootViewController = self.mainVC
+		}
 	}
-
-
+	
+	func applicationDidEnterBackground(_ application: UIApplication) {
+		let vc = UIViewController()
+		vc.view.backgroundColor = .gray
+		window?.rootViewController = vc
+	}
 }
 

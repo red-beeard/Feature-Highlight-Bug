@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
 	private let orangeView = UIView()
 	private let tealView = UIView()
 	
-	private let buttonStartHighlight = UIButton(type: .system)
+	private let btnStartHighlight = UIButton(type: .system)
 	
 	private lazy var views = [indigoView, orangeView, tealView]
 	
@@ -28,41 +28,44 @@ class MainViewController: UIViewController {
 		stack.distribution = .fillEqually
 		
 		stack.translatesAutoresizingMaskIntoConstraints = false
-		buttonStartHighlight.translatesAutoresizingMaskIntoConstraints = false
+		indigoView.translatesAutoresizingMaskIntoConstraints = false
+		orangeView.translatesAutoresizingMaskIntoConstraints = false
+		tealView.translatesAutoresizingMaskIntoConstraints = false
+		btnStartHighlight.translatesAutoresizingMaskIntoConstraints = false
 		
 		view.addSubview(stack)
-		view.addSubview(buttonStartHighlight)
+		view.addSubview(btnStartHighlight)
 		
 		NSLayoutConstraint.activate([
-			indigoView.heightAnchor.constraint(equalTo: indigoView.widthAnchor, multiplier: 1),
+			NSLayoutConstraint(item: indigoView, attribute: .height, relatedBy: .equal, toItem: indigoView, attribute: .width, multiplier: 1, constant: 0),
 			
-			stack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
-			stack.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
-			stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			NSLayoutConstraint(item: stack, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.6, constant: 0),
+			NSLayoutConstraint(item: stack, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: -20),
+			NSLayoutConstraint(item: stack, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0),
 			
-			buttonStartHighlight.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 40),
-			buttonStartHighlight.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+			NSLayoutConstraint(item: btnStartHighlight, attribute: .top, relatedBy: .equal, toItem: stack, attribute: .bottom, multiplier: 1, constant: 40),
+			NSLayoutConstraint(item: btnStartHighlight, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
 		])
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		buttonStartHighlight.setTitle("Start Highlighted", for: .normal)
+		btnStartHighlight.setTitle("Start Highlighted", for: .normal)
 		
-		view.backgroundColor = .systemBackground
-		indigoView.backgroundColor = .systemIndigo
-		orangeView.backgroundColor = .systemOrange
-		tealView.backgroundColor = .systemTeal
-		buttonStartHighlight.backgroundColor = .systemBlue
-		buttonStartHighlight.setTitleColor(.white, for: .normal)
+		view.backgroundColor = .white
+		indigoView.backgroundColor = UIColor(red: 88/255, green: 86/255, blue: 214/255, alpha: 1)
+		orangeView.backgroundColor = UIColor(red: 255/255, green: 149/255, blue: 0/255, alpha: 1)
+		tealView.backgroundColor = UIColor(red: 90/255, green: 200/255, blue: 250/255, alpha: 1)
+		btnStartHighlight.backgroundColor = .systemBlue
+		btnStartHighlight.setTitleColor(.white, for: .normal)
 		
 		indigoView.layer.cornerRadius = 15
 		orangeView.layer.cornerRadius = 15
 		tealView.layer.cornerRadius = 15
-		buttonStartHighlight.layer.cornerRadius = 5
+		btnStartHighlight.layer.cornerRadius = 5
 		
-		buttonStartHighlight.addTarget(self, action: #selector(buttonStartHighlight_Click), for: .touchUpInside)
+		btnStartHighlight.addTarget(self, action: #selector(btnStartHighlight_Click), for: .touchUpInside)
 	}
 	
 	private func getTitle(for view: UIView) -> String {
@@ -92,9 +95,8 @@ class MainViewController: UIViewController {
 		present(vc, animated: true)
 	}
 
-	@objc private func buttonStartHighlight_Click(_ sender: UIButton) {
+	@objc private func btnStartHighlight_Click(_ sender: UIButton) {
 		showHighlight(views)
 	}
-	
 }
 
